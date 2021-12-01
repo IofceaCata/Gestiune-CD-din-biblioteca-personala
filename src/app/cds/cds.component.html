@@ -1,0 +1,128 @@
+<p-toolbar styleClass="p-mb-4" >
+    
+        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="addNewCd()"></button>
+
+        <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" [disabled]="!selectedCds || selectedCds.length === 0" (click)="removeCd()" style="margin-left: 10px;"></button>
+
+        <button pButton pRipple label="Save" icon="pi pi-save" class="p-button-success p-mr-2" (click)="saveChanges()" style="margin-left: 10px;"></button>
+
+        <input type="file"
+        id="file"
+        (change)="onUpload($event)" style="margin-left: 10px;">
+
+</p-toolbar>
+
+<p-table #datatable *ngIf="cds" 
+[value]="cds"
+[paginator]="true" 
+[rows]="10" 
+dataKey="id"
+[showCurrentPageReport]="true" 
+currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
+[rowsPerPageOptions]="[10,15,20]" 
+[rowHover]="true"
+[(selection)]="selectedCds"
+selectionMode="single"
+(onRowSelect)="onRowSelect($event)" 
+(onRowUnselect)="onRowUnselect($event)"
+>
+
+    <!-- Global Filter User Input-->
+    <!-- <ng-template pTemplate="caption">
+        <div style="text-align: right">
+            <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+            <input type="text" pInputText size="50" placeholder="Global Filter" style="width:auto" (input)="datatable.filterGlobal($event.target.value, 'contains')">
+        </div>
+    </ng-template> -->
+
+    <ng-template pTemplate="header" let-cd>
+        <tr>
+            <th pSortableColumn="cdName">Cd Name<p-sortIcon field="code"></p-sortIcon></th>
+            <th pSortableColumn="dimension">Dimension<p-sortIcon field="code"></p-sortIcon></th>
+            <th pSortableColumn="speed">Speed<p-sortIcon field="code"></p-sortIcon></th>
+            <th pSortableColumn="type">Type<p-sortIcon field="code"></p-sortIcon></th>
+            <th pSortableColumn="occupiedSpace">Occupied Space<p-sortIcon field="code"></p-sortIcon></th>
+            <th pSortableColumn="nrSessions">Nr of Sessions<p-sortIcon field="code"></p-sortIcon></th>
+            <th pSortableColumn="sessionType">Session Type<p-sortIcon field="code"></p-sortIcon></th>
+        </tr>
+
+        <tr>
+            <!-- Simple Filter-->
+            <th>
+                <input pInputText type="text" (input)="datatable.filter($event.target.value, 'cdName', 'startsWith')" placeholder="Search by Name" class="p-column-filter" style="width:100%">
+            </th>
+            <th>
+                <input pInputText type="text" (input)="datatable.filter($event.target.value, 'dimension', 'gte')" placeholder="More than" class="p-column-filter" style="width:100%">
+            </th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+
+            <!-- Custom Filter-->
+            <!-- <th>
+                <p-dropdown [options]="days" (onChange)="datatable.filter($event.value, 'dimension', 'equals')" styleClass="p-column-filter" placeholder="Mote than:" [showClear]="true">
+                    <ng-template let-option pTemplate="item">
+                        <span [class]="'customer-badge status-' + option.value">{{option.label}}</span>
+                    </ng-template>
+                </p-dropdown>
+            </th> -->
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-cd>
+        <tr [pSelectableRow]="cd">
+            <td>{{cd.cdName}}</td>
+            <td>{{cd.dimension}}</td>
+            <td>{{cd.speed}}</td>
+            <td>{{cd.type}}</td>
+            <td>{{cd.occupiedSpace}}</td>
+            <td>{{cd.nrSessions}}</td>
+            <td>{{cd.sessionType}}</td>
+            
+        </tr>
+    </ng-template>
+</p-table>
+
+<p-dialog [(visible)]="cdDialog" [style]="{width: '450px'}" header="Add Cd " >
+    
+        <div class="p-field">
+            <label for="name">Name</label>
+            <input class="diallogField" type="text" pInputText id="name" [(ngModel)]="cd.cdName" required autofocus />
+        </div>
+
+        <div class="p-field">
+            <label for="name">Dimension</label>
+            <input class="diallogField" type="text" pInputText id="name" [(ngModel)]="cd.dimension" required autofocus />
+        </div>
+
+        <div class="p-field">
+            <label for="name">Speed</label>
+            <input class="diallogField" type="text" pInputText id="name" [(ngModel)]="cd.speed" required autofocus />
+        </div>
+
+        <div class="p-field">
+            <label for="name">Type</label>
+            <input class="diallogField" type="text" pInputText id="name" [(ngModel)]="cd.type" required autofocus />
+        </div>
+
+        <div class="p-field">
+            <label for="name">Occupied Space</label>
+            <input class="diallogField" type="text" pInputText id="name" [(ngModel)]="cd.occupiedSpace" required autofocus />
+        </div>
+
+        <div class="p-field">
+            <label for="name">Nr of Sessions</label>
+            <input class="diallogField" type="text" pInputText id="name" [(ngModel)]="cd.nrSessions" required autofocus />
+        </div>
+    
+        <div class="p-field">
+            <label for="name">Session Type</label>
+            <input class="diallogField" type="text" pInputText id="name" [(ngModel)]="cd.sessionType" required autofocus />
+        </div>
+
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveCd()" style="margin-left: 10px;" ></button>
+
+</p-dialog>

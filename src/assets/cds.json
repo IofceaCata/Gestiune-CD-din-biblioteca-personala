@@ -1,0 +1,21 @@
+[{
+    "id": 1,
+    "cdName": "CD1",
+    "dimension": "5",
+    "speed": "24",
+    "type": "CD-R",
+    "occupiedSpace": "6",
+    "nrSessions": "0",
+    "sessionType": "idk"
+},
+{
+    "id": 2,
+    "cdName": "CD2",
+    "dimension": "92",
+    "speed": "56",
+    "type": "DVD-R",
+    "occupiedSpace": "15",
+    "nrSessions": "1",
+    "sessionType": "idk2"
+}
+]
